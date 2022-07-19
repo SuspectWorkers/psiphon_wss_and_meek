@@ -114,9 +114,7 @@ systemctl restart sshd
 
 echo "@reboot root screen -dmS psiphon ./psiphond run" | sudo tee -a /etc/crontab
 echo "0 */12 * * * root /sbin/shutdown -r" | sudo tee -a /etc/crontab
-
 rm entry.json
-
 clear
 echo Work is done!
 echo Reboot activated!
