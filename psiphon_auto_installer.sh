@@ -1,4 +1,5 @@
 #!/bin/bash
+
 read -p "Do you wish to install this program? (y / n)? " yn
     if [[ "$yn" =~ 'n' ]]; then exit; fi
 
