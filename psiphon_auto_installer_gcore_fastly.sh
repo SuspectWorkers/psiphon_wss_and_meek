@@ -11,9 +11,9 @@ echo 'Enter the domain for FRONTED-WSS-OSSH (Cloudflare\Gcore mainly, websocket)
 read cf_url
 echo 'Enter the domain for local caching ! (Example: 1.somedomain.com)'
 read local_cache
-#ifconfig
-#echo 'Enter your interface name (Enter only one)! (Example: venet0, esp0s3)'
-#read interf
+ifconfig
+echo 'Enter your interface name (Enter only one)! (Example: venet0, esp0s3)'
+read interf
 
 cd /root
 apt update
@@ -24,8 +24,8 @@ curl https://raw.githubusercontent.com/mukswilly/psicore-binaries/master/psiphon
 chmod +x psiphond
 ./psiphond -ipaddress 127.0.0.1 -protocol FRONTED-MEEK-OSSH:2052 -protocol FRONTED-WSS-OSSH:2053 generate
 
-#jq -c '.RunPacketTunnel = true' psiphond.config  > tmp.$$.json && mv tmp.$$.json psiphond.config
-#jq -c '.PacketTunnelEgressInterface = "'${interf}'"' psiphond.config  > tmp.$$.json && mv tmp.$$.json psiphond.config
+jq -c '.RunPacketTunnel = true' psiphond.config  > tmp.$$.json && mv tmp.$$.json psiphond.config
+jq -c '.PacketTunnelEgressInterface = "'${interf}'"' psiphond.config  > tmp.$$.json && mv tmp.$$.json psiphond.config
 entry=$(cat server-entry.dat | xxd -r -p)
 echo ${entry:8} > entry.json
 cf_url=$(echo '"'${cf_url}'"')
