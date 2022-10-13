@@ -132,7 +132,7 @@ echo 'server {
 
         root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
-        server_name '${eightyport}';
+        server_name '${eighty_port}';
 		
         location /psi443 {
             default_type "text/html";
