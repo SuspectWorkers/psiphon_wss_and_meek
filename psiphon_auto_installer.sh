@@ -9,7 +9,7 @@ echo 'Enter the domain for FRONTED-MEEK-OSSH (Fastly Endpoint) (Fastly,azure and
 read fastly_endpoint
 echo 'Enter the domain for FRONTED-WSS-OSSH (Cloudflare/Gcore mainly, websocket)! (Example: cf.somedomain.com)'
 read cf_url
-echo 'Enter the domain for 80 port psiphon !!'
+echo 'Enter the domain for 80 port psiphon (Example: 80.somedomain.com)!!'
 read eighty_port
 #ifconfig
 #echo 'Enter your interface name (Enter only one)! (Example: venet0, esp0s3)'
@@ -22,7 +22,7 @@ mkdir -p /etc/ssl/v2ray/ && sudo openssl req -x509 -nodes -days 3650 -newkey rsa
 
 curl https://raw.githubusercontent.com/mukswilly/psicore-binaries/master/psiphond/psiphond -o psiphond
 chmod +x psiphond
-./psiphond -ipaddress 127.0.0.1 -protocol FRONTED-MEEK-OSSH:2052 -protocol FRONTED-WSS-OSSH:2053 -protocol FRONTED-MEEK-OSSH:2054 generate
+./psiphond -ipaddress 127.0.0.1 -protocol FRONTED-MEEK-OSSH:2052 -protocol FRONTED-WSS-OSSH:2053 -protocol FRONTED-MEEK-HTTP-OSSH:2054 generate
 
 #jq -c '.RunPacketTunnel = true' psiphond.config  > tmp.$$.json && mv tmp.$$.json psiphond.config
 #jq -c '.PacketTunnelEgressInterface = "'${interf}'"' psiphond.config  > tmp.$$.json && mv tmp.$$.json psiphond.config
@@ -37,13 +37,13 @@ jq -c '.meekFrontingAddresses = ["speedtest.net","image-sandbox.tidal.com","f.cl
 jq -c ".wsFrontingHosts = ["${cf_url}"]" entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
 jq -c '.wsFrontingAddresses = ["ru.music-lord.com","who.int","discord.com"]' entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
 #jq -c ".wsFrontingSNI = "${cf_url}"" entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
-jq -c '.meekServerPort = 443' entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
-jq -c '.wsServerPort = 443' entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
-jq -c ".meekFrontingHosts = ["${fastly_endpoint}"]" entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
-jq -c '.meekFrontingAddresses = ["speedtest.net","image-sandbox.tidal.com","f.cloud.github.com","docs.github.com","linktr.ee","www.paypal.com"]' entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
-jq -c ".wsFrontingHosts = ["${cf_url}"]" entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
-jq -c '.wsFrontingAddresses = ["ru.music-lord.com","who.int","discord.com"]' entry.json  > tmp.$$.json && mv tmp.$$.json entry.json
-jq -c '.meekServerPort = 80' entry.json  > tmp.$$.json && mv tmp.$$.json entry2.json
+jq -c '.meekServerPort = 443' entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.json
+jq -c '.wsServerPort = 443' entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.json
+jq -c ".meekFrontingHosts = ["${fastly_endpoint}"]" entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.json
+jq -c '.meekFrontingAddresses = ["speedtest.net","image-sandbox.tidal.com","f.cloud.github.com","docs.github.com","linktr.ee","www.paypal.com"]' entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.json
+jq -c ".wsFrontingHosts = ["${cf_url}"]" entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.json
+jq -c '.wsFrontingAddresses = ["ru.music-lord.com","who.int","discord.com"]' entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.json
+jq -c '.meekServerPort = 80' entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.json
 jq -c '.wsServerPort = 80' entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.json
 entry1=$(cat entry.json | xxd -p)
 entry2=$(echo 3020302030203020${entry1} | tr -d '[:space:]')
