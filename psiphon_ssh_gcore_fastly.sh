@@ -159,7 +159,7 @@ echo 'server {
         ssl_certificate_key /etc/ssl/v2ray/priv.key;
         root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
-        server_name '${local_cache}';
+        server_name '${eightyport}';
 		
         location /psi443 {
             default_type "text/html";
