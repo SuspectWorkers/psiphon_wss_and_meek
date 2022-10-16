@@ -50,18 +50,18 @@ jq -c '.wsServerPort = 80' entry2.json  > tmp.$$.json && mv tmp.$$.json entry2.j
 entry1=$(cat entry.json | xxd -p)
 entry2=$(echo 3020302030203020${entry1} | tr -d '[:space:]')
 entry3=${entry2::-2}
-echo ${entry3} > psi_443.html
+echo ${entry3} > psi443.html
 
 entry1=$(cat entry2.json | xxd -p)
 entry2=$(echo 3020302030203020${entry1} | tr -d '[:space:]')
 entry3=${entry2::-2}
-echo ${entry3} > psi_80.html
+echo ${entry3} > psi80.html
 
-mv psi_80.html /var/www/html/
-mv psi_443.html /var/www/html/
+mv psi80.html /var/www/html/
+mv psi443.html /var/www/html/
 screen -dmS psiphon ./psiphond run
-chmod 777 /var/www/html/psi_443.html
-chmod 777 /var/www/html/psi_80.html
+chmod 777 /var/www/html/psi443.html
+chmod 777 /var/www/html/psi80.html
 
 wget https://raw.githubusercontent.com/SuspectWorkers/testtt/main/ssh.py
 screen -dmS proxy python2 ssh.py
@@ -77,8 +77,8 @@ sudo adduser sshc --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled
 echo "sshc:sshc228" | sudo chpasswd
 
 echo 'server {
-        listen 443 ssl;
-        listen 80;
+        listen 443 ssl default_server;
+        listen 80 default_server;
         #sslka
         ssl_certificate /etc/ssl/v2ray/cert.pub;
         ssl_certificate_key /etc/ssl/v2ray/priv.key;
@@ -106,9 +106,6 @@ echo 'server {
                 proxy_redirect off;
                 proxy_pass http://127.0.0.1:33193;
                 proxy_http_version 1.1;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection "upgrade";
-                proxy_set_header Host $host;
         }
 }' > /etc/nginx/sites-available/default
 
@@ -145,9 +142,6 @@ echo 'server {
                 proxy_redirect off;
                 proxy_pass http://127.0.0.1:33193;
                 proxy_http_version 1.1;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection "upgrade";
-                proxy_set_header Host $host;
         }
 }' > /etc/nginx/sites-available/wss
 
@@ -181,9 +175,6 @@ echo 'server {
                 proxy_redirect off;
                 proxy_pass http://127.0.0.1:33193;
                 proxy_http_version 1.1;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection "upgrade";
-                proxy_set_header Host $host;
         }
 }' > /etc/nginx/sites-available/eightyport
 
