@@ -21,7 +21,7 @@ echo -e '{
 	},
 	"inbounds": [
 		{
-			"address": "127.0.0.1",
+			"address": "0.0.0.0",
 			"port": 80,
 			"protocol": "vless",
 			"settings": {
@@ -44,7 +44,7 @@ echo -e '{
 			}	
 		},
 		{
-			"address": "127.0.0.1",
+			"address": "0.0.0.0",
 			"port": 443,
 			"protocol": "vless",
 			"settings": {
