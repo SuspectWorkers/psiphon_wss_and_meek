@@ -70,7 +70,7 @@ echo -e '{
                             "keyFile": "/etc/ssl/v2ray/priv.key"
                         }
                     ]
-                }
+                },
 				"wsSettings": {
 					"acceptProxyProtocol": false,
 					"path": "/"
