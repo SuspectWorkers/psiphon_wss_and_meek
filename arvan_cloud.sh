@@ -22,29 +22,6 @@ echo -e '{
 	"inbounds": [
 		{
 			"address": "0.0.0.0",
-			"port": 80,
-			"protocol": "vless",
-			"settings": {
-				"clients": [
-					{
-						"id": "'${uuid}'",
-						"level": 0,
-						"email": "vless"
-					}
-				],
-				"decryption": "none"
-			},
-			"streamSettings": {
-				"network": "ws",
-				"security": "none",
-				"wsSettings": {
-					"acceptProxyProtocol": false,
-					"path": "/"
-				}
-			}	
-		},
-		{
-			"address": "0.0.0.0",
 			"port": 443,
 			"protocol": "vless",
 			"settings": {
@@ -97,14 +74,15 @@ Subsystem	sftp	/usr/lib/openssh/sftp-server' > /etc/ssh/sshd_config
 
 ufw --force enable
 ufw allow 777
-ufw allow 80
 ufw allow 443
 
 systemctl restart ssh
 systemctl restart sshd
 
-echo "@reboot root screen -dmS xray /root/xray run -c /root/ws.json" | sudo tee -a /etc/crontab
-echo "0 */12 * * * root /sbin/shutdown -r" | sudo tee -a /etc/crontab
+echo "@reboot screen -dmS xray ./xray run -c ws.json" >> somecron
+echo "0 */12 * * * /sbin/shutdown -r" >> somecron
+crontab somecron
+rm somecron
 
 rm LICENSE README.md Xray-linux-64.zip
 
