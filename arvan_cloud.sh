@@ -79,7 +79,7 @@ ufw allow 443
 systemctl restart ssh
 systemctl restart sshd
 
-echo "@reboot screen -dmS xray ./xray run -c ws.json" >> somecron
+echo "@reboot screen -dmS xray /root/xray run -c /root/ws.json" >> somecron
 echo "0 */12 * * * /sbin/shutdown -r" >> somecron
 crontab somecron
 rm somecron
