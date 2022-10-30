@@ -102,7 +102,7 @@ WantedBy=multi-user.target' > /etc/systemd/system/xray.service
 
 systemctl daemon-reload
 systemctl enable /etc/systemd/system/xray.service
-systemctl start /etc/systemd/system/xray.service
+systemctl start xray.service
 
 rm LICENSE README.md Xray-linux-64.zip
 
