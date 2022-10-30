@@ -79,10 +79,30 @@ ufw allow 443
 systemctl restart ssh
 systemctl restart sshd
 
-echo "@reboot screen -dmS xray /root/xray run -c /root/ws.json" >> somecron
 echo "0 */12 * * * /sbin/shutdown -r" >> somecron
 crontab somecron
 rm somecron
+
+echo '[Unit]
+Description=Xray 443 ws
+Documentation=https://nekopoi.care
+After=network.target nss-lookup.target
+
+[Service]
+Type=simple
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/root/xray run -c /root/ws.json
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target' > /etc/systemd/system/xray.service
+
+systemctl daemon-reload
+systemctl enable /etc/systemd/system/xray.service
+systemctl start /etc/systemd/system/xray.service
 
 rm LICENSE README.md Xray-linux-64.zip
 
