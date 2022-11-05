@@ -44,11 +44,10 @@ echo -e '{
 	]
 }' > ws.json
 
-systemctl restart ssh
-systemctl restart sshd
-
-echo "@reboot root screen -dmS xray /root/xray run -c /root/ws.json" | sudo tee -a /etc/crontab
-echo "0 */12 * * * root /sbin/shutdown -r" | sudo tee -a /etc/crontab
+echo "@reboot screen -dmS xray /root/xray run -c /root/ws.json" >> somecron
+echo "0 */24 * * * /sbin/shutdown -r" >> somecron
+crontab somecron
+rm somecron
 
 rm LICENSE README.md Xray-linux-64.zip
 
