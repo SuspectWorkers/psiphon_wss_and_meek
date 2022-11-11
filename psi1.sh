@@ -38,7 +38,7 @@ echo 'server {
 	location / {
 			proxy_redirect off;
 			proxy_http_version 1.1;
-			proxy_pass http://127.0.0.1:33190;
+			proxy_pass https://127.0.0.1:33190;
 	}
 
 }' > /etc/nginx/sites-enabled/default
